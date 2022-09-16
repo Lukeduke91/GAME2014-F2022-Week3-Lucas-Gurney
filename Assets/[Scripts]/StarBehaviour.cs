@@ -23,13 +23,13 @@ public class StarBehaviour : MonoBehaviour
 
     public void Move()
     {
-        transform.position = new Vector3(0, verticalSpeed, 0);
+        transform.position -= new Vector3(0.0f, verticalSpeed * Time.deltaTime);
 
     }
 
     public void CheckBounds()
     {
-        if(transform.position.y > boundary.min)
+        if(transform.position.y < boundary.min)
         {
             ResetStars();
         }
@@ -37,6 +37,6 @@ public class StarBehaviour : MonoBehaviour
 
     public void ResetStars()
     {
-        transform.position = new Vector2(0, boundary.max);
+        transform.position = new Vector2(0.0f, boundary.max);
     }
 }

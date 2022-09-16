@@ -8,38 +8,41 @@ public class PlayerBehaviour : MonoBehaviour
     public Boundary boundary;
     public float verticalPosition;
     // Start is called before the first frame update
-    void Start()
+
+    // Update is called once per frame
+     void Start()
     {
         
     }
-
-    // Update is called once per frame
     void Update()
     {
         Move();
 
-        CheckBounds();
+        //float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * speed;
+        //float y = Input.GetAxisRaw("Vertical") * Time.deltaTime * speed;
+
+        //transform.position = new Vector2(transform.position.x + x, transform.position.y + y);
     }
 
-    void Move()
+    public void Move()
     {
         float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * speed;
 
         transform.position += new Vector3(x, 0, 0);
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, boundary.min, boundary.max), verticalPosition);
-        //float clampedXPosition = Mathf.Clamp(transform.position.x, boundary.min, boundary.max);
+        float clampedPosition = Mathf.Clamp(transform.position.x, boundary.min, boundary.max);
+        transform.position = new Vector2(clampedPosition, verticalPosition);
     }
 
-    void CheckBounds()
-    {
-        if (transform.position.x > boundary.max)
-        {
-            transform.position = new Vector2(boundary.max, verticalPosition);
-        }
-        if (transform.position.x < boundary.max)
-        {
-            transform.position = new Vector2(boundary.max, verticalPosition);
-        }
-        //Mathf.Clamp();
-    }
+    //void CheckBounds()
+    //{
+    //    if (transform.position.x > boundary.max)
+    //    {
+    //        transform.position = new Vector2(boundary.max, verticalPosition);
+    //    }
+    //    if (transform.position.x < boundary.max)
+    //    {
+    //        transform.position = new Vector2(boundary.max, verticalPosition);
+    //    }
+    //    //Mathf.Clamp();
+    //}
 }
