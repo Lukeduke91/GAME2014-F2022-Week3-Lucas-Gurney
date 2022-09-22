@@ -66,10 +66,6 @@ public class PlayerBehaviour : MonoBehaviour
             transform.position = Vector2.Lerp(transform.position, destination, Time.deltaTime * speed);
         }
         //var touch = Input.GetTouch(0);
-        
-
-        float clampedPosition = Mathf.Clamp(transform.position.x, boundary.min, boundary.max);
-        transform.position = new Vector2(clampedPosition, verticalPosition);
     }
 
 
