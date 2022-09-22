@@ -7,6 +7,8 @@ public class PlayerBehaviour : MonoBehaviour
     public float speed = 2.0f;
     public Boundary boundary;
     public float verticalPosition;
+    public bool usingMobileInput = false;
+
     private Camera camera;
     // Start is called before the first frame update
 
@@ -15,21 +17,39 @@ public class PlayerBehaviour : MonoBehaviour
     {
         transform.position = new Vector2(0.0f, verticalPosition);
         camera = Camera.main;
+        usingMobileInput = Application.platform == RuntimePlatform.Android || 
+                           Application.platform == RuntimePlatform.IPhonePlayer;
     }
+
     void Update()
     {
-        //Move();
-        GetMobileInput();
+        if(usingMobileInput)
+        {
+            GetMobileInput();
+        }
+        else 
+        { 
+            GetConventionalInput();
+        }
+        Move();
+        //GetMobileInput();
+        //GetConventionalInput();
         //float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * speed;
         //float y = Input.GetAxisRaw("Vertical") * Time.deltaTime * speed;
 
         //transform.position = new Vector2(transform.position.x + x, transform.position.y + y);
     }
 
-    public void Move()
+    void GetConventionalInput()
     {
         float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * speed;
         transform.position += new Vector3(x, 0, 0);
+    }
+
+    public void Move()
+    {
+        //float x = Input.GetAxisRaw("Horizontal") * Time.deltaTime * speed;
+        //transform.position += new Vector3(x, 0, 0);
 
         float clampedPosition = Mathf.Clamp(transform.position.x, boundary.min, boundary.max);
         transform.position = new Vector2(clampedPosition, verticalPosition);
@@ -51,6 +71,8 @@ public class PlayerBehaviour : MonoBehaviour
         float clampedPosition = Mathf.Clamp(transform.position.x, boundary.min, boundary.max);
         transform.position = new Vector2(clampedPosition, verticalPosition);
     }
+
+
     //void CheckBounds()
     //{
     //    if (transform.position.x > boundary.max)
